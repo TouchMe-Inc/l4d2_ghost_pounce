@@ -15,7 +15,7 @@ public Plugin myinfo =
 }
 
 
-#define TEAM_INFECTED 3
+#define TEAM_INFECTED           3
 
 
 ConVar
@@ -69,16 +69,16 @@ void OnVerticalValueChanged(ConVar convar, const char[] sOldValue, const char[] 
 /**
  *
  */
-public Action OnPlayerRunCmd(int client, int& iButtons, int& impulse, float vel[3], float angles[3], int& weapon)
+public Action OnPlayerRunCmd(int iClient, int& iButtons, int& impulse, float vel[3], float angles[3], int& weapon)
 {
 	if (~iButtons & IN_RELOAD
-	|| !IsClientInfected(client)
-	|| !IsClientGhost(client)
-	|| !IsEntOnGround(client)) {
+	|| !IsClientInfected(iClient)
+	|| !IsClientGhost(iClient)
+	|| !IsEntOnGround(iClient)) {
 		return Plugin_Continue;
 	}
 
-	float vVelocity[3]; GetEntPropVector(client, Prop_Data, "m_vecVelocity", vVelocity);
+	float vVelocity[3]; GetEntPropVector(iClient, Prop_Data, "m_vecVelocity", vVelocity);
 
 	if (vVelocity[0] == 0 && vVelocity[1] == 0) {
 		return Plugin_Continue;
@@ -88,7 +88,7 @@ public Action OnPlayerRunCmd(int client, int& iButtons, int& impulse, float vel[
 	vVelocity[1] *= g_fHorizontalMultiplier;
 	vVelocity[2] = g_fVerticalValue;
 
-	TeleportEntity(client, NULL_VECTOR, NULL_VECTOR, vVelocity);
+	TeleportEntity(iClient, NULL_VECTOR, NULL_VECTOR, vVelocity);
 
 	return Plugin_Continue;
 }
